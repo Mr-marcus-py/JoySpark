@@ -52,7 +52,7 @@ RESOURCES = {
     }
 }
 
-#  Mental Health Responses
+# Mental Health Responses
 MENTAL_HEALTH_RESPONSES = {
     "greetings": [
         "Hello! I'm here to listen. How are you feeling today?",
@@ -130,7 +130,7 @@ MENTAL_HEALTH_ACTIVITIES = {
     }
 }
 
-# game database
+# Game database
 GAMES = {
     "Mindful Breathing": {
         "description": "Guided breathing exercise to help you relax",
@@ -180,7 +180,7 @@ GAMES = {
     }
 }
 
-# joke database
+# Joke database
 JOKES = [
     {"setup": "Why don't skeletons fight each other?", "punchline": "They don't have the guts!"},
     {"setup": "What do you call a fake noodle?", "punchline": "An impasta!"},
@@ -194,7 +194,7 @@ JOKES = [
     {"setup": "Why did the golfer bring two pairs of pants?", "punchline": "In case he got a hole in one!"}
 ]
 
-#riddle database
+# Riddle database
 RIDDLES = [
     {"question": "What has keys but can't open locks?", "answer": "piano"},
     {"question": "What gets wetter as it dries?", "answer": "towel"},
@@ -236,21 +236,48 @@ GREETING_RESPONSES = {
         "Wassup! I'm here to chat or help however you need. What's happening?"
     ],
     "bored": [
-        # "I can help with that! Want to hear a joke, play a game, or try a fun activity?",
         "Boredom can be a chance for creativity! Want to try a word association game or a riddle?",
         "Let's beat boredom together! I've got jokes, riddles, games, or we can just chat."
     ]
-    # "i`m bored" : [
-    #     "Boredom can be a chance for creativity! Want to try a word association game or a riddle?",
-    #     "Let's beat boredom together! I've got jokes, riddles, games, or we can just chat."
-    # ]
-
 }
 
 def get_bot_response(user_input):
     user_input = user_input.lower().strip()
     
-        # Handle basic greetings and small talk
+    # ===== CRISIS INTERVENTION =====
+    # Handle suicidal thoughts (highest priority)
+    if any(phrase in user_input for phrase in ["i want to die", "kill myself", "end my life", "suicide"]):
+        return """🚨 Please know you're not alone. Help is available right now:
+        
+- **Nigeria Suicide Hotline**: 0800 800 2000
+- **Lagos Lifeline**: 0903 007 0003
+- **Text CONNECT to 741741** (free crisis counseling)
+
+You matter more than you can feel right now. This pain won't last forever. ❤️"""
+
+    # Handle extreme distress
+    elif "can't stop crying" in user_input:
+        return """Let's try a grounding exercise together:
+1. Name 5 things you can see
+2. 4 things you can touch
+3. 3 sounds you hear
+4. 2 things you smell
+5. 1 deep breath
+
+You're safe in this moment. Would you like me to stay with you?"""
+
+    # Handle acute stress
+    elif "i'm so stressed" in user_input:
+        return """Try this 5-minute meditation:
+1. Sit comfortably and close your eyes
+2. Breathe in for 4 seconds
+3. Hold for 4 seconds
+4. Exhale for 6 seconds
+5. Repeat 5 times
+
+Remember: This feeling will pass. You've survived 100% of your worst days so far. 💪"""
+
+    # Handle basic greetings and small talk
     if any(word in user_input for word in ["hi", "hello", "hey"]):
         return random.choice(GREETING_RESPONSES["hello"])
     
@@ -258,7 +285,7 @@ def get_bot_response(user_input):
     if "wassup" in user_input or "what's up" in user_input:
         return random.choice(GREETING_RESPONSES["wassup"])
     if any(word in user_input for word in ["i am bored", "i'm bored", "bored"]):
-        return "Oh really, let's cheer you up then! 😊\n\n" + "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources**"
+        return "Oh really, let's cheer you up then! 😊\n\n" + "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources\""
     
     if any(word in user_input for word in ["your name", "who are you", "what are you"]):
         return random.choice(GREETING_RESPONSES["name"])
@@ -273,7 +300,7 @@ def get_bot_response(user_input):
     if any(word in user_input for word in ["menu", "back", "home", "main"]):
         st.session_state.game_state["current_activity"] = None
         st.session_state.game_state["current_game"] = None
-        return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources**"
+        return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources\""
     
     # Mental health section
     elif any(word in user_input for word in ["mental", "health", "support", "1", "feel"]):
@@ -366,7 +393,7 @@ def get_bot_response(user_input):
             return f"😂 **Joke:**\n\n{joke['setup']}"
         else:
             st.session_state.game_state["current_activity"] = None
-            return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources**"
+            return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources\""
     
     # Handling riddles
     elif st.session_state.game_state["current_activity"] == "riddles":
@@ -382,7 +409,7 @@ def get_bot_response(user_input):
             return f"🤔 **New Riddle:**\n\n{new_riddle['question']}"
         elif "no" in user_input:
             st.session_state.game_state["current_activity"] = None
-            return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources**"
+            return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources\""
         else:
             return "🤔 Not quite right! Try again or type 'answer' to see the solution."
     
@@ -403,7 +430,7 @@ def get_bot_response(user_input):
     
     # Default response
     else:
-        return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources**"
+        return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources\""
 
 def handle_game(game_name):
     """Start a new game"""
@@ -598,7 +625,7 @@ with st.sidebar:
     if st.button("🔄 Reset Conversation"):
         st.session_state.messages = [{
             "role": "assistant",
-            "content": "🌟 **Welcome to JoySpark, a Mindful Companion!**\n\nI'm here to support your mental health and entertain you when needed.\n\nChoose an option:\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources**"
+            "content": "🌟 **Welcome to JoySpark, a Mindful Companion!**\n\nI'm here to support your mental health and entertain you when needed.\n\nChoose an option:\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources\""
         }]
         st.session_state.game_state = {
             "current_activity": None,
