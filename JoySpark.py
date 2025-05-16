@@ -229,15 +229,36 @@ GREETING_RESPONSES = {
         "You're very welcome! I'm happy to help.",
         "No problem at all! Let me know if you need anything else.",
         "Glad I could assist! What else can I do for you today?"
+    ],
+    "wassup": [
+        "Not much, just here to support you! What's up with you?",
+        "Hey there! Just hanging out ready to help. What's going on with you?",
+        "Wassup! I'm here to chat or help however you need. What's happening?"
+    ],
+    "bored": [
+        # "I can help with that! Want to hear a joke, play a game, or try a fun activity?",
+        "Boredom can be a chance for creativity! Want to try a word association game or a riddle?",
+        "Let's beat boredom together! I've got jokes, riddles, games, or we can just chat."
     ]
+    # "i`m bored" : [
+    #     "Boredom can be a chance for creativity! Want to try a word association game or a riddle?",
+    #     "Let's beat boredom together! I've got jokes, riddles, games, or we can just chat."
+    # ]
+
 }
 
 def get_bot_response(user_input):
     user_input = user_input.lower().strip()
     
-    # Handle basic greetings and small talk
+        # Handle basic greetings and small talk
     if any(word in user_input for word in ["hi", "hello", "hey"]):
         return random.choice(GREETING_RESPONSES["hello"])
+    
+    # Handle "wassup" or "what's up"
+    if "wassup" in user_input or "what's up" in user_input:
+        return random.choice(GREETING_RESPONSES["wassup"])
+    if any(word in user_input for word in ["i am bored", "i'm bored", "bored"]):
+        return "Oh really, let's cheer you up then! 😊\n\n" + "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources**"
     
     if any(word in user_input for word in ["your name", "who are you", "what are you"]):
         return random.choice(GREETING_RESPONSES["name"])
@@ -334,7 +355,7 @@ def get_bot_response(user_input):
         else:
             return random.choice(MENTAL_HEALTH_RESPONSES["neutral"])
     
-    #  my bot Handling jokes
+    # Handling jokes
     elif st.session_state.game_state["current_activity"] == "jokes":
         if any(word in user_input for word in ["punchline", "what", "why", "tell me", "answer"]):
             joke = st.session_state.game_state["current_joke"]
@@ -347,7 +368,7 @@ def get_bot_response(user_input):
             st.session_state.game_state["current_activity"] = None
             return "🌟 **Main Menu:**\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources**"
     
-    #  my bot Handling riddles
+    # Handling riddles
     elif st.session_state.game_state["current_activity"] == "riddles":
         riddle = st.session_state.game_state["current_riddle"]
         
@@ -365,7 +386,7 @@ def get_bot_response(user_input):
         else:
             return "🤔 Not quite right! Try again or type 'answer' to see the solution."
     
-    #  my bot Handling game selection 
+    # Handling game selection 
     elif st.session_state.game_state["current_activity"] == "games":
         if st.session_state.game_state["current_game"]:
             return continue_game(user_input)
