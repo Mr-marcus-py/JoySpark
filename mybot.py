@@ -244,8 +244,7 @@ GREETING_RESPONSES = {
 def get_bot_response(user_input):
     user_input = user_input.lower().strip()
     
-    # ===== CRISIS INTERVENTION =====
-    # Handle suicidal thoughts (highest priority)
+    # crisis
     if any(phrase in user_input for phrase in ["i want to die", "kill myself", "end my life", "suicide"]):
         return """🚨 Please know you're not alone. Help is available right now:
         
@@ -625,7 +624,7 @@ with st.sidebar:
     if st.button("🔄 Reset Conversation"):
         st.session_state.messages = [{
             "role": "assistant",
-            "content": "🌟 **Welcome to JoySpark, a Mindful Companion!**\n\nI'm here to support your mental health and entertain you when needed.\n\nChoose an option:\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources\""
+            "content": "🌟 **Welcome to JoySpark, a Mindful Companion!**\n\nI'm here to support your mental health and entertain you when needed.\nHow can I be of help today buddy?\nChoose an option:\n\n1. 🧠 **Mental Health Support**\n2. 🎮 **Games**\n3. 😂 **Jokes**\n4. 🤔 **Riddles**\n5. ℹ️ **Resources\""
         }]
         st.session_state.game_state = {
             "current_activity": None,
