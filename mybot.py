@@ -7,8 +7,6 @@ st.set_page_config(
     page_icon="🧠",
     layout="wide"
 )
-
-# Initialize session state
 if "messages" not in st.session_state:
     st.session_state.messages = [{
         "role": "assistant", 
@@ -26,8 +24,7 @@ if "game_state" not in st.session_state:
         "last_word": "",
         "mood_ratings": []
     }
-
-# Mental Health Resources
+    # resources for mental health 
 RESOURCES = {
     "Crisis Hotlines": {
         "Nigeria mental health emergency Lifeline": "0800 800 2000",
@@ -52,7 +49,7 @@ RESOURCES = {
     }
 }
 
-# Mental Health Responses
+#  Responses for mental health res.
 MENTAL_HEALTH_RESPONSES = {
     "greetings": [
         "Hello! I'm here to listen. How are you feeling today?",
@@ -105,7 +102,7 @@ MENTAL_HEALTH_RESPONSES = {
     }
 }
 
-# Mental Health Activities
+#Activities for mental health.
 MENTAL_HEALTH_ACTIVITIES = {
     "Mood Tracker": {
         "description": "Track your mood patterns over time",
@@ -254,7 +251,7 @@ def get_bot_response(user_input):
 
 You matter more than you can feel right now. This pain won't last forever. ❤️"""
 
-    # Handle extreme distress
+    # for distress
     elif "can't stop crying" in user_input:
         return """Let's try a grounding exercise together:
 1. Name 5 things you can see
@@ -265,7 +262,7 @@ You matter more than you can feel right now. This pain won't last forever. ❤�
 
 You're safe in this moment. Would you like me to stay with you?"""
 
-    # Handle acute stress
+    # for stress
     elif "i'm so stressed" in user_input:
         return """Try this 5-minute meditation:
 1. Sit comfortably and close your eyes
@@ -276,7 +273,7 @@ You're safe in this moment. Would you like me to stay with you?"""
 
 Remember: This feeling will pass. You've survived 100% of your worst days so far. 💪"""
 
-    # Handle basic greetings and small talk
+    #  greetings and small talk
     if any(word in user_input for word in ["hi", "hello", "hey"]):
         return random.choice(GREETING_RESPONSES["hello"])
     
@@ -295,7 +292,7 @@ Remember: This feeling will pass. You've survived 100% of your worst days so far
     if any(word in user_input for word in ["thank", "thanks", "appreciate"]):
         return random.choice(GREETING_RESPONSES["thanks"])
     
-    # Main menu navigation
+    # Main menu 
     if any(word in user_input for word in ["menu", "back", "home", "main"]):
         st.session_state.game_state["current_activity"] = None
         st.session_state.game_state["current_game"] = None
@@ -354,7 +351,7 @@ Remember: This feeling will pass. You've survived 100% of your worst days so far
                                 MENTAL_HEALTH_RESPONSES["coping_skills"]["long_term"])
             return f"Here's a coping skill to try:\n\n{skill}\n\nWould you like another?"
         
-        # Enhanced activity options
+        #  activity options
         elif "track" in user_input or "mood" in user_input:
             st.session_state.game_state["current_game"] = "Mood Tracker"
             return handle_game("Mood Tracker")
@@ -367,7 +364,7 @@ Remember: This feeling will pass. You've survived 100% of your worst days so far
             st.session_state.game_state["current_game"] = "Self-Compassion Break"
             return handle_game("Self-Compassion Break")
             
-        # Check for breathing exercise
+        #  breathing exercise
         elif "breath" in user_input or "breathe" in user_input:
             st.session_state.game_state["current_game"] = "Mindful Breathing"
             return handle_game("Mindful Breathing")
@@ -570,7 +567,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Display chat messages
+# show chat messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
@@ -588,7 +585,7 @@ if prompt := st.chat_input("Type your message here..."):
         with st.chat_message("assistant"):
             st.markdown(response)
 
-# Sidebar section
+# Sidebar for quick actions and resources.
 with st.sidebar:
     st.title("JoySpark")
     st.markdown("### Quick Actions:")
